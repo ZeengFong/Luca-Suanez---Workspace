@@ -1,0 +1,93 @@
+package searchingAndSorting;
+import java.util.Scanner;
+import java.util.Random;
+
+public class searchandsort {
+	
+	public static int[] populateTsArraySequentially(int[] manta) {
+		for (int i = 0; i < 100; i++) {
+			manta[i] = i+1;
+		}
+		return manta;
+	}
+	public static int[] populateTsArrayRandomly(int[] manta) {
+		Random rand = new Random();
+		for (int i = 0; i < 100; i++) {
+			manta[i] = (int)(Math.random() * (100-1) + 1);
+		}
+		return manta;
+	}
+	public static boolean isTsArraySorted(int[] manta) {
+		for(int i = 0; i < manta.length-1; i++) {
+			if (manta[i] > manta[i+1]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public static int[] shuffleTsArray(int[] manta) {
+		for(int i = 0; i < 1000; i++) {
+			int num1 = (int)(Math.random() * (100));
+			int num2 = (int)(Math.random() * (100));
+			
+			int temp = manta[num1];
+			manta[num1] = manta [num2];
+			manta [num2] = temp;
+		}
+		return manta;
+	}
+	public static void displayTsArray(int[] manta) {
+		System.out.println();
+		for (int i = 0; i < manta.length; i += 10) {
+			System.out.println();
+			System.out.print("[ ");
+			for(int j = i; j < i+10; j++) {
+				System.out.printf("%3d ", manta[j]);
+			}
+			System.out.print("]");
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		int[] array = new int[100];
+		int choice = 6;
+		while(choice != 0) {
+			System.out.println("\n\n0. Exit\n1. Populate array sequentially\n2. Populate array randomly\n3. Is array sorted?\n4. Display the array\n5. Shuffle the array");
+			
+			try {
+			choice = input.nextInt();
+			while (choice < 0 || 5 < choice) {
+				System.out.println("choose 0-5");
+				choice = input.nextInt();
+			}
+			} catch(Exception e) {
+				System.out.println("Please choose a given option");
+				input.next();
+			}
+			if(choice == 1) {
+				array = populateTsArraySequentially(array);
+			}
+			if(choice == 2) {
+				array = populateTsArrayRandomly(array);
+			}
+			if (choice == 3) {
+				if (isTsArraySorted(array)) {
+					System.out.println("Yes");
+				}
+				else{
+					System.out.println("no");
+				}
+			}
+			if (choice == 4) {
+				displayTsArray(array);
+			}
+			if (choice == 5) {
+				shuffleTsArray(array);
+			}
+		}
+		input.close();
+		System.exit(0);
+	}
+
+}

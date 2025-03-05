@@ -1,0 +1,265 @@
+package searchingAndSorting;
+import java.util.Scanner;
+import java.util.Random;
+
+public class searchandsort {
+	
+	public static int[] populateTsArraySequentially(int[] manta) {
+		for (int i = 0; i < 100; i++) {
+			manta[i] = i+1;
+		}
+		return manta;
+	}
+	
+	public static int[] populateTsArrayRandomly(int[] manta) {
+		Random rand = new Random();
+		for (int i = 0; i < 100; i++) {
+			manta[i] = (int)(Math.random() * (100-1) + 1);
+		}
+		return manta;
+	}
+	
+	public static boolean isTsArraySorted(int[] manta) {
+		for(int i = 0; i < manta.length-1; i++) {
+			if (manta[i] > manta[i+1]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static int[] shuffleTsArray(int[] manta) {
+		for(int i = 0; i < 1000; i++) {
+			int num1 = (int)(Math.random() * (100));
+			int num2 = (int)(Math.random() * (100));
+			
+			int temp = manta[num1];
+			manta[num1] = manta [num2];
+			manta [num2] = temp;
+		}
+		return manta;
+	}
+	
+	public static void displayTsArray(int[] manta) {
+		System.out.println();
+		for (int i = 0; i < manta.length; i += 10) {
+			System.out.println();
+			System.out.print("[ ");
+			for(int j = i; j < i+10; j++) {
+				System.out.printf("%3d ", manta[j]);
+			}
+			System.out.print("]");
+		}
+	}
+	
+	public static int linearSearch(int[] manta, int target) {
+		for (int i = 0; i < manta.length; i++) {
+			if (manta[i] == target) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int binarySearch(int[] manta, int target) {
+		int lowerBound = 0;
+		int upperBound = manta.length -1;
+		
+		if (!isTsArraySorted(manta))
+			return -1;
+		
+		if (manta[lowerBound] == target)
+			return lowerBound;
+		else if (manta[upperBound] == target)
+			return upperBound;
+		
+		while (lowerBound < upperBound-1) {
+			int tempBound = ((upperBound + lowerBound)/2);
+			if (manta[tempBound] == target)
+				return tempBound;
+			else if (manta[tempBound] < target)
+				lowerBound = tempBound;
+			else
+				upperBound = tempBound;
+		}
+		return -1;
+	}
+	
+	public static int[] bubbleSort(int[] manta) {
+		for(int i = 0; i < manta.length; i++) {
+			for (int j = i+1; j < manta.length; j++) {
+				if(manta[i] > manta[j]) {
+					int temp = manta[i];
+					manta[i] = manta[j];
+					manta[j] = temp;
+				}
+			}
+		}
+		return manta;
+	}
+	
+	public static int[] selectionSort(int[] manta) {
+		for(int i = 0; i < manta.length-1; i++) {
+			int tempSmallest = manta[i];
+			int a=i;
+			for(int j = i; j < manta.length; j++) {
+				if (manta[j] < tempSmallest) {
+					tempSmallest = manta[j];
+					a = j;
+				}
+			}
+			int temp = manta[i];
+			manta[i] = manta[a];
+			manta[a] = temp;
+		}
+		return manta;
+	}
+	
+	public static int[] insertionSort(int[] manta) {
+		for (int i = 1; i < manta.length; i++) {
+			int manti = manta[i];
+			int j = i-1;
+			while (j >= 0 && manti < manta[j]) {
+				j--;
+			}
+			shift(manta, i, j+1);
+			manta[j+1] = manti;
+		}
+		return manta;
+	}
+	
+	public static int[] shift(int[] manta, int highNum, int lowNum) {
+		for (int i = highNum; i > lowNum; i--) {
+			manta[i] = manta[i-1];
+		}
+		return manta;
+	}
+	
+	public static int[] radix(int[] manta) {
+		int[] copy = new int[100];
+		int a = 0;
+		for(int i = 0; i < 3; i++) {
+			copy = new int[100];
+			a = 0;
+			for(int j = 0; j < 10; j++) {
+				for (int k = 0; k < manta.length; k++) {					
+					if ((manta[k]/((int)Math.pow(10, i)))%10 == j) {
+						copy[a] = manta[k];
+						a++;
+					}
+				}
+			}
+			manta = copy;
+		}
+		return manta;
+	}
+	
+	public static int[] quickSort(int[] manta, int startPoint, int endPoint) {
+		int low = startPoint;
+		int high = endPoint;
+		while (low!=high) {
+			while (manta[high] >= manta[low] && high > 0)
+				high--;
+			if (manta[high] < manta[low]) {
+				int temp = manta[high];
+				manta[high] = manta[low];
+				manta[low] = temp;
+			}
+			while (manta[low] <= manta [high] && low < manta.length-1)
+				low++;
+			if (manta[low] > manta[high]) {
+				int temp = manta[high];
+				manta[high] = manta[low];
+				manta[low] = temp;
+			}
+		}
+		if (low - startPoint > 1)
+			quickSort(manta, startPoint, low-1);
+		if (endPoint - high > 1)
+			quickSort(manta, high+1, endPoint);
+		return manta;
+	}
+	
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		int[] array = new int[100];
+		int choice = 6;
+		while(choice != 0) {
+			System.out.println("\n\n0. Exit\n1. Populate sequentially\n2. Populate randomly\n3. Is array sorted?\n4. Display the array\n5. Shuffle\n6. Linear search\n7. Binary search\n8. Bubble sort\n9. Selection sort\n10. Insertion sort\n11. Radix sort\n12. Quick sort");
+			
+			try {
+			choice = input.nextInt();
+			while (choice < 0 || 12 < choice) {
+				System.out.println("choose a valid option");
+				choice = input.nextInt();
+			}
+			} catch(Exception e) {
+				System.out.println("Please choose a given option");
+				input.next();
+			}
+			if(choice == 1) {
+				array = populateTsArraySequentially(array);
+			}
+			if(choice == 2) {
+				array = populateTsArrayRandomly(array);
+			}
+			if (choice == 3) {
+				if (isTsArraySorted(array)) {
+					System.out.println("Yes");
+				}
+				else{
+					System.out.println("no");
+				}
+			}
+			if (choice == 4) {
+				displayTsArray(array);
+			}
+			if (choice == 5) {
+				shuffleTsArray(array);
+			}
+			if (choice == 6) {
+				System.out.println("Which number are you looking for?");
+				int target = input.nextInt();
+				if (linearSearch(array, target) == -1) {
+					System.out.println("Your number was not found in the array.");
+				}
+				else {
+					System.out.println("Your number was found at the [" + linearSearch(array, target) + "] index in the array.");
+				}
+			}
+			if (choice == 7) {
+				System.out.println("Which number are you looking for?");
+				int target = input.nextInt();
+				int index = binarySearch(array, target);
+				
+				if (index == -1)
+					System.out.println("Array is not sorted or target is not in the array, sort it first and revaluate");
+				else
+					System.out.println("Your target is at the [" + index + "] index in the array");
+			}
+			if (choice == 8) {
+				array = bubbleSort(array);
+				System.out.println("Sorted.");
+			}
+			if (choice == 9) {
+				array = selectionSort(array);
+				System.out.println("Sorted.");
+			}
+			if (choice == 10) {
+				array = insertionSort(array);
+				System.out.println("Sorted.");
+			}
+			if (choice == 11) {
+				array = radix(array);
+				System.out.println("Sorted.");
+			}
+			if (choice == 12) {
+				array = quickSort(array, 0, array.length-1);
+				System.out.println("Sorted.");
+			}
+		}
+		input.close();
+		System.exit(0);
+	}
+
+}
