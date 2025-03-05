@@ -242,9 +242,11 @@ public class searchandsort {
 			}
 			if(choice == 1) {
 				array = populateTsArraySequentially(array);
+				System.out.println("Populated.");
 			}
 			if(choice == 2) {
 				array = populateTsArrayRandomly(array);
+				System.out.println("Populated.");
 			}
 			if (choice == 3) {
 				if (isTsArraySorted(array)) {
@@ -259,6 +261,7 @@ public class searchandsort {
 			}
 			if (choice == 5) {
 				shuffleTsArray(array);
+				System.out.println("Shuffled.");
 			}
 			if (choice == 6) {
 				System.out.println("Which number are you looking for?");
