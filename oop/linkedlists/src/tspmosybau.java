@@ -1,4 +1,5 @@
 public class tspmosybau {
+    
     public static void main(String[] args) throws Exception {
         while (true){
             System.out.println("pmopmopmo  pmopmopmo\n   pmo     pmo      \n   pmo     pmopmopmo\n   pmo           pmo\n   pmo     pmopmopmo\n");
