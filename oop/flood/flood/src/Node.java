@@ -1,15 +1,15 @@
 public class Node {
     private Node up, down, left, right;
-    private String colorName;
-    private String colorCode;
+    private String colourName;
+    private String colourCode;
 
-    public Node(String colorName, String colorCode) {
+    public Node(String colourName, String colourCode) {
         this.up = null;
         this.down = null;
         this.left = null;
         this.right = null;
-        this.colorName = colorName;
-        this.colorCode = colorCode;
+        this.colourName = colourName;
+        this.colourCode = colourCode;
     }
 
     public Node getUp() {
@@ -44,11 +44,20 @@ public class Node {
         this.right = right;
     }
 
-    public String getColorName() {
-        return colorName;
+    public void setColourName(String colourName) {
+        this.colourName = colourName;
     }
 
-    public String getColorCode() {
-        return colorCode;
+    public void setColourCode(String colourCode) {
+        this.colourCode = colourCode;
     }
+
+    public String getColourName() {
+        return colourName;
+    }
+
+    public String getColourCode() {
+        return colourCode;
+    }
+
 }
