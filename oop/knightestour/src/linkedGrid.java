@@ -91,19 +91,54 @@ public class linkedGrid {
             return null;
     }
 
+    public Node backtrack(Node n){
+        int i = 1;
+        while(move(i,n).getC() != n.getC()-1){
+            i++;
+            continue;
+        }
+        Node temp = move(i, n);
+        n.setC(0);
+        return temp;
+    }
+
     public void tour(Node n, int counter){
-        counter = counter+1;
+
         n.setC(counter);
-        for(int i = 0; i < 8; i++){
+        if( (n.getUp() != null) && (n.getUp().getUp() != null) && (n.getUp().getUp().getLeft() != null) && n.getUp().getUp().getLeft().getC() == 0){
+            tour(n.getUp().getUp().getLeft(), counter+1);
+        }
+
+
+        n.setC(0);
+
+
+
+
+
+        /* 
+        n.setC(counter);
+        counter = counter+1;
+        int nullcounter = 0;
+        for(int i = 1; i <= 8; i++){
             Node temp = move(i, n);
             if (temp != null && temp.getC() == 0){
                 tour(temp, counter);
             }
+            else if (temp == null){
+                nullcounter = nullcounter + 1;
+            }
         }
-        if (counter == dimensions){
+        if (nullcounter == 8){
+            n = backtrack(n);
+            counter = counter - 1;
+        }
+        if (n.getC() == dimensions*dimensions){
             System.out.println("Tour found!");
             printGrid();
+            return;
         }
+            */
     }
 
 }
